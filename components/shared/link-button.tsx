@@ -1,10 +1,11 @@
+import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { Button, ButtonProps } from '../base/button';
 
 interface Props extends ButtonProps {
   href: string;
   icon?: React.ReactNode;
-  text: string;
+  text?: string;
 }
 
 export default function LinkButton({
@@ -15,9 +16,12 @@ export default function LinkButton({
 }: Props) {
   return (
     <Link href={href}>
-      <Button className="gap-2" {...buttonProps}>
+      <Button
+        {...buttonProps}
+        className={cn(text && 'gap-2', buttonProps.className)}
+      >
         {icon}
-        <span>{text}</span>
+        {text && <span>{text}</span>}
       </Button>
     </Link>
   );
