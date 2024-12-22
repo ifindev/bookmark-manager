@@ -5,7 +5,7 @@ import { Input } from '@/components/base/input';
 import { Textarea } from '@/components/base/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { Bookmark } from '@/models/bookmark';
-import { LoaderCircle } from 'lucide-react';
+import { FileText, LinkIcon, LoaderCircle, Tag, Type } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -71,7 +71,7 @@ export default function EditBookmark({ params }: { params: { id: string } }) {
 
   if (!bookmark) {
     return (
-      <div className="w-screen h-screen flex items-center justify-center animate-spin">
+      <div className="w-full h-screen flex items-center justify-center animate-spin">
         <LoaderCircle className="text-blue-600 w-16 h-16" />
       </div>
     );
@@ -82,66 +82,75 @@ export default function EditBookmark({ params }: { params: { id: string } }) {
       <div className="max-w-md mx-auto">
         <h1 className="text-2xl font-bold mb-4">Edit Bookmark</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label
-              htmlFor="link"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Link
-            </label>
+          <div className="relative">
             <Input
-              type="url"
               id="link"
               name="link"
-              defaultValue={bookmark.link}
+              type="url"
               required
+              className="pl-10"
+              placeholder="https://example.com"
+              defaultValue={bookmark.link}
             />
+            <LinkIcon className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
           </div>
           <div>
             <label
               htmlFor="title"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-gray-700 mb-1"
             >
               Title
             </label>
-            <Input
-              type="text"
-              id="title"
-              name="title"
-              defaultValue={bookmark.title}
-              required
-            />
+            <div className="relative">
+              <Input
+                id="title"
+                name="title"
+                type="text"
+                required
+                className="pl-10"
+                placeholder="Bookmark Title"
+                defaultValue={bookmark.title}
+              />
+              <Type className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+            </div>
           </div>
           <div>
             <label
               htmlFor="description"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-gray-700 mb-1"
             >
               Description
             </label>
-
-            <Textarea
-              id="description"
-              name="description"
-              className="pt-2 bg-white"
-              rows={3}
-              placeholder="Enter a description...
-              defaultValue={bookmark.description}"
-            />
+            <div className="relative">
+              <Textarea
+                id="description"
+                name="description"
+                className="pl-10 pt-2 bg-white"
+                rows={3}
+                placeholder="Enter a description..."
+                defaultValue={bookmark.description}
+              />
+              <FileText className="w-5 h-5 absolute left-3 top-3 text-gray-400" />
+            </div>
           </div>
           <div>
             <label
               htmlFor="tags"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-gray-700 mb-1"
             >
-              Tags (comma-separated)
+              Tags
             </label>
-            <Input
-              type="text"
-              id="tags"
-              name="tags"
-              defaultValue={bookmark.tags?.join(', ')}
-            />
+            <div className="relative">
+              <Input
+                id="tags"
+                name="tags"
+                type="text"
+                className="pl-10"
+                placeholder="Enter tags, comma-separated"
+                defaultValue={bookmark.tags?.join(', ')}
+              />
+              <Tag className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+            </div>
           </div>
           <div className="flex justify-end space-x-2">
             <Button
